@@ -6,12 +6,13 @@ MIGRATIONS_DIR = 'migrations'
 TEMPLATE = '''"""
 Migration {migration_id}: {description}
 """
+from pymongo.database import Database
 
-def upgrade(db):
+def upgrade(db: Database) -> None:
     # Write your upgrade logic here
     pass
 
-def downgrade(db):
+def downgrade(db: Database) -> None:
     # Write your downgrade logic here
     pass
 '''
