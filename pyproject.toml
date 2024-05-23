@@ -13,6 +13,15 @@ python = "^3.12"
 pymongo = "^4.7.2"
 click = "^8.1.7"
 python-dotenv = "^1.0.1"
+toml = "^0.10.2"
+msgspec = "^0.18.6"
+
+[tool.pymongo_migration]
+migrations_dir = "migrations"
+
+[tool.pymongo_migration.env_lookup]
+db_uri = "DATABASE_URI"
+db_name = "DATABASE_NAME"
 
 
 [build-system]

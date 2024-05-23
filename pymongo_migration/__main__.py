@@ -1,9 +1,9 @@
 import os
 import click, dotenv
+from .config import config
 
-
-MONGO_URI = dotenv.get_key(".env", "MONGO_CONNECTION_URI")
-DATABASE_NAME = dotenv.get_key(".env", "DATABASE_NAME")
+MONGO_URI = dotenv.get_key(".env", config.env_lookup.db_uri)
+DATABASE_NAME = dotenv.get_key(".env", config.env_lookup.db_name)
 
 @click.group("main")
 def main() -> None:

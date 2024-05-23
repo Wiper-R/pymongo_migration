@@ -3,23 +3,23 @@ from os import PathLike
 import os
 from pymongo.database import Database
 
+from .config import config
 from .migration_state import MigrationState
 
 
 class MigrationManager:
-    def __init__(self, db: Database, migration_dir: PathLike = "migrations") -> None:
+    def __init__(self, db: Database) -> None:
         self.migration_state = MigrationState(db)
-        self.migration_dir = migration_dir
         self.db = db
 
     def _load_migration(self, migration):
-        return importlib.import_module(f"{self.migration_dir}.{migration}")
+        return importlib.import_module(f"{config.migrations_dir}.{migration}")
 
     def upgrade(self, target=None):
         applied_migrations = self.migration_state.get_applied_migrations()
         migrations = sorted(
             f[:-3]
-            for f in os.listdir(self.migration_dir)
+            for f in os.listdir(config.migration_dir)
             if f.endswith(".py") and not f.startswith("_")
         )
 

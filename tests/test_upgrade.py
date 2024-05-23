@@ -1,1 +1,2 @@
 import pymongo_migration
+import pymongo_migration.config

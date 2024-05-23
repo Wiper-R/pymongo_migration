@@ -1,7 +1,5 @@
 import os
-
-
-MIGRATIONS_DIR = 'migrations'
+from .config import config
 
 TEMPLATE = '''"""
 Migration {migration_id}: {description}
@@ -19,10 +17,10 @@ def downgrade(db: Database) -> None:
 
 def create_migration_file(migration_id: str, description: str):
     filename = f'{migration_id}_{description.replace(" ", "_").lower()}.py'
-    filepath = os.path.join(MIGRATIONS_DIR, filename)
+    filepath = os.path.join(config.migrations_dir, filename)
 
-    if not os.path.exists(MIGRATIONS_DIR):
-        os.makedirs(MIGRATIONS_DIR)
+    if not os.path.exists(config.migrations_dir):
+        os.makedirs(config.migrations_dir)
 
     content = TEMPLATE.format(
         migration_id=migration_id,
