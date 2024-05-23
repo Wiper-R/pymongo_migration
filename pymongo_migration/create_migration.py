@@ -6,7 +6,7 @@ MIGRATIONS_DIR = 'migrations'
 TEMPLATE = '''"""
 Migration {migration_id}: {description}
 """
-from pymongo.database import Database
+from pymongo_migration.types import Database
 
 def upgrade(db: Database) -> None:
     # Write your upgrade logic here
