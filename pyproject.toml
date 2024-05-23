@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pymongo-migration"
+version = "0.1.0"
+description = ""
+authors = ["Wiper-R <rshivang12345@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include="pymongo_migration" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pymongo = "^4.7.2"
+click = "^8.1.7"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
