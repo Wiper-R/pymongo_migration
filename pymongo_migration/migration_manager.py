@@ -1,11 +1,11 @@
 import importlib
-import importlib.util
+from importlib.machinery import SourceFileLoader
 from os import PathLike
 import os
 from pymongo.database import Database
-
 from .config import config
 from .migration_state import MigrationState
+
 
 
 class MigrationManager:
@@ -15,6 +15,7 @@ class MigrationManager:
 
     def _load_migration(self, migration):
         # spec = importlib.util.spec_from_file_location()
+        return SourceFileLoader(migration, f"{config.migrations_dir}/{migration}.py").load_module()
         return importlib.import_module(f"{config.migrations_dir.replace('/', '.')}.{migration}")
 
     def upgrade(self, target=None):
