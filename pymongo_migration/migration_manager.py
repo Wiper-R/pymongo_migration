@@ -13,13 +13,13 @@ class MigrationManager:
         self.db = db
 
     def _load_migration(self, migration):
-        return importlib.import_module(f"{config.migrations_dirs}.{migration}")
+        return importlib.import_module(f"{config.migrations_dir}.{migration}")
 
     def upgrade(self, target=None):
         applied_migrations = self.migration_state.get_applied_migrations()
         migrations = sorted(
             f[:-3]
-            for f in os.listdir(config.migration_dir)
+            for f in os.listdir(config.migrations_dir)
             if f.endswith(".py") and not f.startswith("_")
         )
 
