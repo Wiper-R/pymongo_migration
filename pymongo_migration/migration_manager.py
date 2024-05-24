@@ -13,7 +13,7 @@ class MigrationManager:
         self.db = db
 
     def _load_migration(self, migration):
-        return importlib.import_module(f"{config.migrations_dir}.{migration}")
+        return importlib.import_module(f"{config.migrations_dirs}.{migration}")
 
     def upgrade(self, target=None):
         applied_migrations = self.migration_state.get_applied_migrations()
