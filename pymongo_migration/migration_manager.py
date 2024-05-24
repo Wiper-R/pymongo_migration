@@ -1,4 +1,5 @@
 import importlib
+import importlib.util
 from os import PathLike
 import os
 from pymongo.database import Database
@@ -13,7 +14,8 @@ class MigrationManager:
         self.db = db
 
     def _load_migration(self, migration):
-        return importlib.import_module(f"{config.migrations_dir}.{migration}")
+        # spec = importlib.util.spec_from_file_location()
+        return importlib.import_module(f"{config.migrations_dir.replace('/', '.')}.{migration}")
 
     def upgrade(self, target=None):
         applied_migrations = self.migration_state.get_applied_migrations()
