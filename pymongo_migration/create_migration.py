@@ -1,4 +1,5 @@
 import os
+
 from .config import config
 
 TEMPLATE = '''"""
@@ -15,6 +16,7 @@ def downgrade(db: Database) -> None:
     pass
 '''
 
+
 def create_migration_file(migration_id: str, description: str):
     filename = f'{migration_id}_{description.replace(" ", "_").lower()}.py'
     filepath = os.path.join(config.migrations_dir, filename)
@@ -27,7 +29,7 @@ def create_migration_file(migration_id: str, description: str):
         description=description,
     )
 
-    with open(filepath, 'w') as f:
+    with open(filepath, "w") as f:
         f.write(content)
 
     return filename

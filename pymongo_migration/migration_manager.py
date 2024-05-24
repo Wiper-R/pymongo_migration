@@ -1,11 +1,9 @@
-import importlib
-from importlib.machinery import SourceFileLoader
-from os import PathLike
 import os
-from pymongo.database import Database
+from importlib.machinery import SourceFileLoader
+
 from .config import config
 from .migration_state import MigrationState
-
+from .types import Database
 
 
 class MigrationManager:
@@ -13,12 +11,12 @@ class MigrationManager:
         self.migration_state = MigrationState(db)
         self.db = db
 
-    def _load_migration(self, migration):
-        # spec = importlib.util.spec_from_file_location()
-        return SourceFileLoader(migration, f"{config.migrations_dir}/{migration}.py").load_module()
-        return importlib.import_module(f"{config.migrations_dir.replace('/', '.')}.{migration}")
+    def _load_migration(self, migration: str):
+        return SourceFileLoader(
+            migration, f"{config.migrations_dir}/{migration}.py"
+        ).load_module()
 
-    def upgrade(self, target=None):
+    def upgrade(self, target: str | None = None):
         applied_migrations = self.migration_state.get_applied_migrations()
         migrations = sorted(
             f[:-3]
@@ -35,7 +33,7 @@ class MigrationManager:
                 if target and migration == target:
                     break
 
-    def downgrade(self, target=None):
+    def downgrade(self, target: str | None = None):
         applied_migrations = self.migration_state.get_applied_migrations()
         applied_migrations.reverse()
 

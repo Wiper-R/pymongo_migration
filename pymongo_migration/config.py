@@ -1,12 +1,13 @@
 import os
-import toml
-import msgspec
 
+import msgspec
+import toml
 
 
 class EnvLookup(msgspec.Struct):
     db_uri: str = "DATABASE_URI"
     db_name: str = "DATABASE_NAME"
+
 
 class Config(msgspec.Struct):
     migrations_dir: str = "migrations"
@@ -19,8 +20,10 @@ def load_config() -> Config:
         with open("pyproject.toml") as f:
             _toml = toml.load(f)
 
-        return msgspec.toml._convert(_toml.get('tool', {}).get("pymongo_migration", {}), Config)
-    
+        return msgspec.toml._convert(
+            _toml.get("tool", {}).get("pymongo_migration", {}), Config
+        )
+
     return Config()
 
 
